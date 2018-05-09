@@ -48,12 +48,12 @@ glm::mat4 parallaxBackScale;
 
 //Ball
 Ball ball;
-glm::vec3 ballVelocity = { -4.0f, -7.5f, 0.0f };
+glm::vec3 ballVelocity = { -3.0f, -5.5f, 0.0f };
 bool stuckToPaddle;
 
 //Player
 Player player;
-glm::vec3 playerVelocity = { 15.0f, 0.0f, 0.0f };
+glm::vec3 playerVelocity = { 10.0f, 0.0f, 0.0f };
 bool moveLeft;
 bool moveRight;
 GLint mouseX;
@@ -660,7 +660,7 @@ void updateBall()
 		}
 
 		//Power up lost
-		if (powerUp.position.y > (GLfloat)boundBottom - 40.0f)
+		if (powerUp.position.y > (GLfloat)boundBottom + 40.0f)
 		{
 			powerUp.active = false;
 			powerUp.position.y = 0.0f;
@@ -1114,15 +1114,24 @@ void setScore()
 void setPowerUp()
 {
 	//Big ball
-	if (powerUps == 1) ball.scale *= 2.0f;
+	if (powerUps == 1)
+	{
+		player.colour = glm::vec3(0.5f, 0.0f, 1.0f);
+		ball.scale *= 2.0f;
+	}
 
 	//Max brick hits
-	else if (powerUps == 2) maxHits();
+	else if (powerUps == 2)
+	{
+		player.colour = glm::vec3(0.0f, 1.0f, 0.5f);
+		maxHits();
+	}
 
 	//Slow ball
 	else if (powerUps == 3)
 	{
-		ballVelocity /= 1.5f;
+		player.colour = glm::vec3(1.0f, 0.5f, 0.0f);
+		ballVelocity *= 1.5f;
 		playerVelocity *= 1.5f;
 	}
 }
